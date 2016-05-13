@@ -85,6 +85,28 @@ function SearchContacts(req,res,intent) {
     });
 }
 
+function SpellContactLastName(req,res,intent) {
+  var firstName = intent.slots.firstName.value;
+  var lastName = intent.slots.lastName.value;
+  console.log("Searching for "+firstName+" "+lastName);
+  org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+firstName+'&lastName='+lastName},
+    function(err,result) {
+    if(err) {
+              console.log(err);
+              send_alexa_error(res,'An error occured during that search: '+err);
+            }
+      else {
+          console.log(result);
+          if(result == null || result == '') {
+             send_alexa_response(res,'I could not find anyone by the name of '+firstName+' '+lastName, 'Salesforce', 'Contact Result', 'No Result', true);
+          } else {
+            var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
+            send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
+          }
+        } 
+    });
+}
+
 
 //setup actual server
 var server = app.listen(port, function () {
