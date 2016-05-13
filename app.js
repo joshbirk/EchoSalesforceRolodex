@@ -70,10 +70,11 @@ function SearchContacts(req,res,intent) {
 
   if(!err && resp.records && resp.records.length > 0) {
     console.log(resp.records);
-    send_alexa_error(res,'The first result has an ID of '+resp.records[0].Id);
+    send_alexa_response(res, 'Found '+intent.slots.firstName.value, 'Salesforce Rolodex', 'Contact Result', 'Success', false);
 
   } else {
-    send_alexa_error(res,'No results found for '+intent.slots.firstName.value+' '+intent.slots.lastName.value);
+    console.log(intent);
+    send_alexa_error(res,'No results found');
   }
 });
 }
