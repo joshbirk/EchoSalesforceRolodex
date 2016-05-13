@@ -70,8 +70,7 @@ function SearchContacts(req,res,intent) {
   org.query({ oauth:intent.oauth, query: q }, function(err, resp){
     console.log(resp);
     isend_alexa_error(res,'No results found');
-    }
-});
+    });
 }
 
 
