@@ -68,8 +68,15 @@ function SearchContacts(req,res,intent) {
   var q = 'SELECT ID from Contact where LASTNAME ="'+intent.slots.lastName.value+'" LIMIT 1';
   console.log(q);
   org.query({ oauth:intent.oauth, query: q }, function(err, resp){
-    console.log(resp);
-    send_alexa_error(res,'No results found');
+    if(err) {
+                  console.log(err);
+                  send_alexa_error(res,'An error occured during that search: '+err);
+                }
+                else {
+                  console.log(resp);
+                  var speech = 'Found '+intent.slots.lastName.value;
+                  send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', false);
+                }
     });
 }
 
