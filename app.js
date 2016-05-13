@@ -64,21 +64,19 @@ function PleaseWait(req,res,intent) {
 }
 
 function SearchContacts(req,res,intent) {
-	console.log(intent);
-  var q = 'SELECT ID, FIRSTNAME from Contact where LASTNAME = \''+intent.slots.lastName.value+'\' LIMIT 1';
-  console.log(q);
-  org.query({ oauth:intent.oauth, query: q }, function(err, resp){
+  var firstName = intent.slots.firstName.value;
+  var lastName = intent.slots.lastName.value;
+	org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+firstName+'&lastName='+lastName},
+    function(err,result) {
     if(err) {
                   console.log(err);
                   send_alexa_error(res,'An error occured during that search: '+err);
                 }
                 else {
-                  if(resp.records.length > 0) {
-                    console.log(resp.records[0]);
-                    var speech = 'Found '+intent.slots.lastName.value+' with the first name of '+resp.records[0].get('firstName');
+                    var speech = 'Found '+resp.lastName+' with the first name of '+resp.firstname;
                     send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', false);
                   } else {
-                    send_alexa_response(res, 'No results found for '+intent.slots.lastName.value, 'Salesforce', 'Contact Result', 'No Result', false);
+                    send_alexa_response(res, 'No results found for '+lastName, 'Salesforce', 'Contact Result', 'No Result', false);
                   }
                 }
     });
