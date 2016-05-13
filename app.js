@@ -65,11 +65,11 @@ function PleaseWait(req,res,intent) {
 
 function SearchContacts(req,res,intent) {
 	console.log(intent);
-  var q = 'SELECT ID from Contact where FIRSTNAME = "'+intent.slots.firstName.value+'" AND LASTNAME ="'+intent.slots.lastName.value+'" LIMIT 1';
+  var q = 'SELECT ID from Contact where LASTNAME ="'+intent.slots.lastName.value+'" LIMIT 1';
   console.log(q);
   org.query({ oauth:intent.oauth, query: q }, function(err, resp){
     console.log(resp);
-    isend_alexa_error(res,'No results found');
+    send_alexa_error(res,'No results found');
     });
 }
 
