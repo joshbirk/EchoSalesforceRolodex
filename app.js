@@ -58,6 +58,7 @@ sfdc_amazon.addRoutes(app,oauth_timeout,true);
 /* List of identifiable intent / actions that the route will respond to */
 var intent_functions = new Array();
 intent_functions['SearchContacts'] = SearchContacts;
+intent_functions['SpellContactLastName'] = SpellContactLastName;
 
 function PleaseWait(req,res,intent) {
   send_alexa_response(res, 'Waiting', 'Salesforce', '...', 'Waiting', false);
