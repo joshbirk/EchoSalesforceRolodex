@@ -75,8 +75,12 @@ function SearchContacts(req,res,intent) {
             }
       else {
           console.log(result);
-          var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
-          send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
+          if(result == null || result == '') {
+             send_alexa_error(res,'I could not find anyone by the name of '+firstName+' '+lastName);
+          } else {
+            var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
+            send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
+          }
         } 
     });
 }
