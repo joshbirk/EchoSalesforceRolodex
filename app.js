@@ -76,7 +76,7 @@ function SearchContacts(req,res,intent) {
       else {
           console.log(result);
           if(result == null || result == '') {
-             send_alexa_error(res,'I could not find anyone by the name of '+firstName+' '+lastName);
+             send_alexa_response(res,'I could not find anyone by the name of '+firstName+' '+lastName, 'Salesforce', 'Contact Result', 'No Result', true);
           } else {
             var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
             send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
