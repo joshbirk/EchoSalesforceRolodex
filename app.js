@@ -66,6 +66,7 @@ function PleaseWait(req,res,intent) {
 function SearchContacts(req,res,intent) {
 	console.log(intent);
   var q = 'SELECT ID from Contact where FIRSTNAME = "'+intent.slots.firstName.value+'" AND LASTNAME ="'+intent.slots.lastName.value+'" LIMIT 1';
+  console.log(q);
   org.query({ oauth:intent.oauth, query: q }, function(err, resp){
 
   if(!err && resp.records && resp.records.length > 0) {
