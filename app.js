@@ -68,7 +68,7 @@ function SearchContacts(req,res,intent) {
   var q = 'SELECT ID from Contact where FIRSTNAME = "'+intent.slots.firstName.value+'" AND LASTNAME ="'+intent.slots.lastName.value+'" LIMIT 1';
   org.query({ oauth:intent.oauth, query: q }, function(err, resp){
 
-  if(!err && resp.records) {
+  if(!err && resp.records && resp.records.length > 0) {
     console.log(resp.records);
     send_alexa_error(res,'The first result has an ID of '+resp.records[0].Id);
 
