@@ -70,17 +70,14 @@ function SearchContacts(req,res,intent) {
 	org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+firstName+'&lastName='+lastName},
     function(err,result) {
     if(err) {
-                  console.log(err);
-                  send_alexa_error(res,'An error occured during that search: '+err);
-                }
-                else {
-                    console.log(result);
-                    if(result == null || result == '') {
-                       send_alexa_error(res,'I could not find anyone by the name of '+firstName+' '+lastName);
-                    }
-                    var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
-                    send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
-                  } 
+              console.log(err);
+              send_alexa_error(res,'An error occured during that search: '+err);
+            }
+      else {
+          console.log(result);
+          var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
+          send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
+        } 
     });
 }
 
