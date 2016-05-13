@@ -74,8 +74,9 @@ function SearchContacts(req,res,intent) {
                   send_alexa_error(res,'An error occured during that search: '+err);
                 }
                 else {
+                    console.log(err);
                     var speech = 'Found '+result.lastName+' with the first name of '+result.firstname;
-                    send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', false);
+                    send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
                   } 
     });
 }
