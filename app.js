@@ -87,8 +87,8 @@ function SearchContacts(req,res,intent) {
 }
 
 function SpellContactLastName(req,res,intent) {
-  var firstName = intent.slots.firstName.value;
-  var lastName = intent.slots.lastName.value;
+  var firstName = 'josh';
+  var lastName = intent.slots.letter.value;
   console.log("Searching for "+firstName+" "+lastName);
   org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+firstName+'&lastName='+lastName},
     function(err,result) {
