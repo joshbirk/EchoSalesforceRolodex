@@ -75,6 +75,9 @@ function SearchContacts(req,res,intent) {
                 }
                 else {
                     console.log(result);
+                    if(result == null) {
+                       send_alexa_error(res,'I could not find anyone by the name of '+firstName+' '+lastName);
+                    }
                     var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
                     send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
                   } 
