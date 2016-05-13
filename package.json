@@ -1,0 +1,15 @@
+{
+  "name": "heroku-echo-demo",
+  "version": "0.0.1",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "alexa-nodekit": "^1.0.2",
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "nforce": "^1.2.0",
+    "nforce-chatter": "*",
+    "sfdc-oauth-amazon-express": "*"
+  }
+}
