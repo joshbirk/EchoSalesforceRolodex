@@ -68,15 +68,9 @@ function SearchContacts(req,res,intent) {
   var q = 'SELECT ID from Contact where FIRSTNAME = "'+intent.slots.firstName.value+'" AND LASTNAME ="'+intent.slots.lastName.value+'" LIMIT 1';
   console.log(q);
   org.query({ oauth:intent.oauth, query: q }, function(err, resp){
-  console.log(resp);
-  if(!err && resp.records && resp.records.length > 0) {
-    console.log(resp.records);
-    send_alexa_response(res, 'Found '+intent.slots.firstName.value, 'Salesforce Rolodex', 'Contact Result', 'Success', false);
-
-  } else {
-    console.log(intent);
-    send_alexa_error(res,'No results found');
-  }
+    console.log(resp);
+    isend_alexa_error(res,'No results found');
+    }
 });
 }
 
