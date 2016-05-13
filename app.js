@@ -75,10 +75,7 @@ function SearchContacts(req,res,intent) {
                 else {
                     var speech = 'Found '+resp.lastName+' with the first name of '+resp.firstname;
                     send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', false);
-                  } else {
-                    send_alexa_response(res, 'No results found for '+lastName, 'Salesforce', 'Contact Result', 'No Result', false);
-                  }
-                }
+                  } 
     });
 }
 
