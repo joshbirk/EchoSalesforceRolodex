@@ -96,13 +96,13 @@ function SpellName(req,res,intent) {
   //console.log("Searching for "+firstName+" "+lastName);
   if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] == 'start') {
     LAST_NAMES[intent.oauth.accessToken] = intent.slots.letter.value;
-    send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+    send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
   }
 
   if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] != 'start') {
     if(intent.slots.letter.value.toLowerCase() != 'stop') {
       LAST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
-      send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+      send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
     } else {
        org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+FIRST_NAMES[intent.oauth.accessToken]+'&lastName='+LAST_NAMES[intent.oauth.accessToken]},
         function(err,result) {
@@ -129,21 +129,21 @@ function SpellName(req,res,intent) {
 
   if(FIRST_NAMES[intent.oauth.accessToken] == null) {
     FIRST_NAMES[intent.oauth.accessToken] = 'start';
-    send_alexa_response(res, 'OK, begin spelling first name', 'Salesforce', 'Contact Spell', 'Success', true);
+    send_alexa_response(res, 'OK, begin spelling first name', 'Salesforce', 'Contact Spell', 'Success', false);
   }
 
   if(FIRST_NAMES[intent.oauth.accessToken] == 'start') {
     FIRST_NAMES[intent.oauth.accessToken] = intent.slots.letter.value;
-    send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+    send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
   } 
 
   if(FIRST_NAMES[intent.oauth.accessToken] != null && FIRST_NAMES[intent.oauth.accessToken] != 'start') {
     if(intent.slots.letter.value.toLowerCase() != 'stop') {
       FIRST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
-      send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+      send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
     } else {
       LAST_NAMES[intent.oauth.accessToken] = 'start';
-      send_alexa_response(res, 'OK, begin spelling last name', 'Salesforce', 'Contact Spell', 'Success', true);
+      send_alexa_response(res, 'OK, begin spelling last name', 'Salesforce', 'Contact Spell', 'Success', false);
     }
   } 
   
