@@ -104,6 +104,10 @@ function SpellName(req,res,intent) {
       LAST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
       send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
     } else {
+       console.log('FINDING');
+       console.log(FIRST_NAMES[intent.oauth.accessToken]);
+       console.log(LAST_NAMES[intent.oauth.accessToken]);
+
        org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+FIRST_NAMES[intent.oauth.accessToken]+'&lastName='+LAST_NAMES[intent.oauth.accessToken]},
         function(err,result) {
         if(err) {
@@ -122,7 +126,7 @@ function SpellName(req,res,intent) {
         });
         FIRST_NAMES[intent.oauth.accessToken] = null;
         LAST_NAMES[intent.oauth.accessToken] = null;
-       
+        return;
     }
   } 
 
