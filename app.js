@@ -104,6 +104,9 @@ function SpellName(req,res,intent) {
     if(intent.slots.lastThree.value != null) {last_name += intent.slots.lastThree.value };
     if(intent.slots.lastFour.value != null) {last_name += intent.slots.lastFour.value };
 
+    first_name = first_name.toLowerCase().replace(/\./g,'');
+    last_name = last_name.toLowerCase().replace(/\./g,'');    
+
     console.log(first_name);
     console.log(last_name);
     org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+first_name+'&lastName='+last_name},
