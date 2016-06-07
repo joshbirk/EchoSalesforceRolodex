@@ -99,7 +99,7 @@ function SpellName(req,res,intent) {
     send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
   }
 
-  if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] != 'start') {
+  else if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] != 'start') {
     if(intent.slots.letter.value.toLowerCase() != 'stop') {
       LAST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
       send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
@@ -131,17 +131,17 @@ function SpellName(req,res,intent) {
   } 
 
 
-  if(FIRST_NAMES[intent.oauth.accessToken] == null) {
+  else if(FIRST_NAMES[intent.oauth.accessToken] == null) {
     FIRST_NAMES[intent.oauth.accessToken] = 'start';
     send_alexa_response(res, 'OK, begin spelling first name', 'Salesforce', 'Contact Spell', 'Success', false);
   }
 
-  if(FIRST_NAMES[intent.oauth.accessToken] == 'start') {
+  else if(FIRST_NAMES[intent.oauth.accessToken] == 'start') {
     FIRST_NAMES[intent.oauth.accessToken] = intent.slots.letter.value;
     send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
   } 
 
-  if(FIRST_NAMES[intent.oauth.accessToken] != null && FIRST_NAMES[intent.oauth.accessToken] != 'start') {
+  else if(FIRST_NAMES[intent.oauth.accessToken] != null && FIRST_NAMES[intent.oauth.accessToken] != 'start') {
     if(intent.slots.letter.value.toLowerCase() != 'stop') {
       FIRST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
       send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
