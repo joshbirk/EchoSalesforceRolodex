@@ -7,6 +7,10 @@ var API = process.env.API || 'v32.0';
 var oauth_timeout = process.env.oauth_timeout || 5400;
 var DEBUG_ON = process.env.DEBUG_ON || true;
 
+
+var FIRST_NAMES = [];
+var LAST_NAMES = [];
+
 /* REQUIRED PACKAGES */
 
 //alexa response transform
@@ -58,7 +62,7 @@ sfdc_amazon.addRoutes(app,oauth_timeout,true);
 /* List of identifiable intent / actions that the route will respond to */
 var intent_functions = new Array();
 intent_functions['SearchContacts'] = SearchContacts;
-intent_functions['SpellContactLastName'] = SpellContactLastName;
+intent_functions['SpellName'] = SpellName;
 
 function PleaseWait(req,res,intent) {
   send_alexa_response(res, 'Waiting', 'Salesforce', '...', 'Waiting', false);
@@ -86,26 +90,67 @@ function SearchContacts(req,res,intent) {
     });
 }
 
-function SpellContactLastName(req,res,intent) {
-  var firstName = 'josh';
-  var lastName = intent.slots.letter.value;
-  console.log("Searching for "+firstName+" "+lastName);
-  org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+firstName+'&lastName='+lastName},
-    function(err,result) {
-    if(err) {
-              console.log(err);
-              send_alexa_error(res,'An error occured during that search: '+err);
-            }
-      else {
-          console.log(result);
-          if(result == null || result == '') {
-             send_alexa_response(res,'I could not find anyone by the name of '+firstName+' '+lastName, 'Salesforce', 'Contact Result', 'No Result', true);
-          } else {
-            var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
-            send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
-          }
-        } 
-    });
+function SpellName(req,res,intent) {
+  //var firstName = 'josh';
+  //var lastName = intent.slots.letter.value;
+  //console.log("Searching for "+firstName+" "+lastName);
+  if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] == 'start') {
+    LAST_NAMES[intent.oauth.accessToken] = intent.slots.letter.value;
+    send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+  }
+
+  if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] != 'start') {
+    if(intent.slots.letter.value.toLowerCase() != 'stop') {
+      LAST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
+      send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+    } else {
+       org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+FIRST_NAMES[intent.oauth.accessToken]+'&lastName='+LAST_NAMES[intent.oauth.accessToken]},
+        function(err,result) {
+        if(err) {
+                  console.log(err);
+                  send_alexa_error(res,'An error occured during that search: '+err);
+                }
+          else {
+              console.log(result);
+              if(result == null || result == '') {
+                 send_alexa_response(res,'I could not find anyone by the name of '+firstName+' '+lastName, 'Salesforce', 'Contact Result', 'No Result', true);
+              } else {
+                var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
+                send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
+              }
+            } 
+        });
+        FIRST_NAMES[intent.oauth.accessToken] = null;
+        LAST_NAMES[intent.oauth.accessToken] = null;
+       
+    }
+  } 
+
+
+  if(FIRST_NAMES[intent.oauth.accessToken] == null) {
+    FIRST_NAMES[intent.oauth.accessToken] = 'start';
+    send_alexa_response(res, 'OK, begin spelling first name', 'Salesforce', 'Contact Spell', 'Success', true);
+  }
+
+  if(FIRST_NAMES[intent.oauth.accessToken] == 'start') {
+    FIRST_NAMES[intent.oauth.accessToken] = intent.slots.letter.value;
+    send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+  } 
+
+  if(FIRST_NAMES[intent.oauth.accessToken] != null && FIRST_NAMES[intent.oauth.accessToken] != 'start') {
+    if(intent.slots.letter.value.toLowerCase() != 'stop') {
+      FIRST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
+      send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', true);
+    } else {
+      LAST_NAMES[intent.oauth.accessToken] = 'start';
+      send_alexa_response(res, 'OK, begin spelling last name', 'Salesforce', 'Contact Spell', 'Success', true);
+    }
+  } 
+  
+
+
+
+ 
 }
 
 
