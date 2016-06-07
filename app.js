@@ -103,6 +103,9 @@ function SpellName(req,res,intent) {
     if(intent.slots.lastTwo.value != null) {last_name += intent.slots.lastTwo.value };
     if(intent.slots.lastThree.value != null) {last_name += intent.slots.lastThree.value };
     if(intent.slots.lastFour.value != null) {last_name += intent.slots.lastFour.value };
+
+    console.log(first_name);
+    console.log(last_name);
     org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+first_name+'&lastName='+last_name},
         function(err,result) {
         if(err) {
