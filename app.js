@@ -100,7 +100,7 @@ function SpellName(req,res,intent) {
   }
 
   else if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] != 'start') {
-    if(intent.slots.letter.value.toLowerCase() != 'stop') {
+    if(intent.slots.letter.value.toLowerCase() != 'next') {
       LAST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
       send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
     } else {
@@ -142,7 +142,7 @@ function SpellName(req,res,intent) {
   } 
 
   else if(FIRST_NAMES[intent.oauth.accessToken] != null && FIRST_NAMES[intent.oauth.accessToken] != 'start') {
-    if(intent.slots.letter.value.toLowerCase() != 'stop') {
+    if(intent.slots.letter.value.toLowerCase() != 'next') {
       FIRST_NAMES[intent.oauth.accessToken] += intent.slots.letter.value;
       send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
     } else {
