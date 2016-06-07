@@ -105,8 +105,8 @@ function SpellName(req,res,intent) {
       send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
     } else {
        console.log('FINDING');
-       console.log(FIRST_NAMES[intent.oauth.accessToken]);
-       console.log(LAST_NAMES[intent.oauth.accessToken]);
+       console.log(FIRST_NAMES[intent.oauth.accessToken].replace('/./gi',''));
+       console.log(LAST_NAMES[intent.oauth.accessToken].replace('/./gi',''));
 
        org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+FIRST_NAMES[intent.oauth.accessToken]+'&lastName='+LAST_NAMES[intent.oauth.accessToken]},
         function(err,result) {
@@ -117,7 +117,7 @@ function SpellName(req,res,intent) {
           else {
               console.log(result);
               if(result == null || result == '') {
-                 send_alexa_response(res,'I could not find anyone by the name of '+firstName+' '+lastName, 'Salesforce', 'Contact Result', 'No Result', true);
+                 send_alexa_response(res,'I could not find anyone by that name', 'Salesforce', 'Contact Result', 'No Result', true);
               } else {
                 var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
                 send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
