@@ -92,6 +92,17 @@ function SearchContacts(req,res,intent) {
 
 function SpellName(req,res,intent) {
 
+    if(intent.slots.firstOne.value == 'ai') { intent.slots.firstOne.value = 'i';} //wtf
+    if(intent.slots.firstTwo.value == 'ai') { intent.slots.firstTwo.value = 'i';} //wtf
+    if(intent.slots.firstThree.value == 'ai') { intent.slots.firstThree.value = 'i';} //wtf
+    if(intent.slots.firstFour.value == 'ai') { intent.slots.firstFour.value = 'i';} //wtf
+     
+    if(intent.slots.lastOne.value == 'ai') { intent.slots.lastOne.value = 'i';} //wtf
+    if(intent.slots.lastTwo.value == 'ai') { intent.slots.lastTwo.value = 'i';} //wtf
+    if(intent.slots.lastThree.value == 'ai') { intent.slots.lastThree.value = 'i';} //wtf
+    if(intent.slots.lastFour.value == 'ai') { intent.slots.lastFour.value = 'i';} //wtf
+
+
     var first_name = '';
     if(intent.slots.firstOne.value != null) {first_name += intent.slots.firstOne.value };
     if(intent.slots.firstTwo.value != null) {first_name += intent.slots.firstTwo.value };
