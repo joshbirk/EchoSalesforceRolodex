@@ -91,9 +91,9 @@ function SearchContacts(req,res,intent) {
 }
 
 function SpellName(req,res,intent) {
-  //var firstName = 'josh';
-  //var lastName = intent.slots.letter.value;
-  //console.log("Searching for "+firstName+" "+lastName);
+  console.log(FIRST_NAMES[intent.oauth.accessToken]);
+  console.log(LAST_NAMES[intent.oauth.accessToken]);
+
   if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] == 'start') {
     LAST_NAMES[intent.oauth.accessToken] = intent.slots.letter.value;
     send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
@@ -147,7 +147,7 @@ function SpellName(req,res,intent) {
     }
   } 
   
-
+  
 
 
  
