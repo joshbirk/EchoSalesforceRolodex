@@ -91,7 +91,35 @@ function SearchContacts(req,res,intent) {
 }
 
 function SpellName(req,res,intent) {
-  if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] == 'start') {
+
+    var first_name = '';
+    if(intent.slots.firstOne.value != null) {first_name += intent.slots.firstOne.value };
+    if(intent.slots.firstTwo.value != null) {first_name += intent.slots.firstTwo.value };
+    if(intent.slots.firstThree.value != null) {first_name += intent.slots.firstThree.value };
+    if(intent.slots.firstFour.value != null) {first_name += intent.slots.firstFour.value };
+
+    var last_name = '';
+    if(intent.slots.lastOne.value != null) {last_name += intent.slots.lastOne.value };
+    if(intent.slots.lastTwo.value != null) {last_name += intent.slots.lastTwo.value };
+    if(intent.slots.lastThree.value != null) {last_name += intent.slots.lastThree.value };
+    if(intent.slots.lastFour.value != null) {last_name += intent.slots.lastFour.value };
+    org.apexRest({oauth:intent.oauth, uri:'EchoContactSearch?firstName='+first_name+'&lastName='+last_name},
+        function(err,result) {
+        if(err) {
+                  console.log(err);
+                  send_alexa_error(res,'An error occured during that search: '+err);
+                }
+          else {
+              console.log(result);
+              if(result == null || result == '') {
+                 send_alexa_response(res,'I could not find anyone by that name', 'Salesforce', 'Contact Result', 'No Result', true);
+              } else {
+                var speech = 'Found '+result.lastName+' with the first name of '+result.firstName;
+                send_alexa_response(res, speech, 'Salesforce', 'Contact Result', 'Success', true);
+              }
+            } 
+        });
+/*  if(LAST_NAMES[intent.oauth.accessToken] != null && LAST_NAMES[intent.oauth.accessToken] == 'start') {
     LAST_NAMES[intent.oauth.accessToken] = intent.slots.letter.value;
     send_alexa_response(res, 'OK', 'Salesforce', 'Contact Spell', 'Success', false);
   }
@@ -153,7 +181,7 @@ function SpellName(req,res,intent) {
   console.log(LAST_NAMES[intent.oauth.accessToken]);
 
 
- 
+ */
 }
 
 
