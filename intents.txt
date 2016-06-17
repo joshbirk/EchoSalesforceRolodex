@@ -1,0 +1,46 @@
+{
+	"intents": [{
+			"intent": "SearchContacts",
+			"slots": [{
+				"name": "firstName",
+				"type": "AMAZON.US_FIRST_NAME"
+			}, {
+				"name": "lastName",
+				"type": "LAST_NAME"
+			}]
+		}, {
+			"intent": "SpellName",
+			"slots": [{
+				"name": "firstOne",
+				"type": "Alphabet"
+			}, {
+				"name": "firstTwo",
+				"type": "Alphabet"
+			}, {
+				"name": "firstThree",
+				"type": "Alphabet"
+			}, {
+				"name": "firstFour",
+				"type": "Alphabet"
+			}, {
+				"name": "lastOne",
+				"type": "Alphabet"
+			}, {
+				"name": "lastTwo",
+				"type": "Alphabet"
+			}, {
+				"name": "lastThree",
+				"type": "Alphabet"
+			}, {
+				"name": "lastFour",
+				"type": "Alphabet"
+			}]
+		}, {
+			"intent": "AMAZON.StopIntent"
+		}, {
+			"intent": "AMAZON.CancelIntent"
+		}
+
+	]
+}
+

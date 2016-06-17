@@ -63,9 +63,14 @@ sfdc_amazon.addRoutes(app,oauth_timeout,true);
 var intent_functions = new Array();
 intent_functions['SearchContacts'] = SearchContacts;
 intent_functions['SpellName'] = SpellName;
+intent_functions['AMAZON.StopIntent'] = Stop;
 
 function PleaseWait(req,res,intent) {
   send_alexa_response(res, 'Waiting', 'Salesforce', '...', 'Waiting', false);
+}
+
+function Stop(req,res,intent) {
+  send_alexa_response(res, 'Goodbye', 'Salesforce', '...', 'Goodbye', true);
 }
 
 function SearchContacts(req,res,intent) {
